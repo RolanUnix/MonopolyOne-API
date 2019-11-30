@@ -72,6 +72,12 @@ namespace Monopoly
             ["room_id"] = roomId.ToString()
         });
 
+        public string GetTokenGame(uint id, ulong gameId) => CallMethod("games.resolve", new Dictionary<string, string>
+        {
+            ["gs_id"] = id.ToString(),
+            ["gs_game_id"] = gameId.ToString()
+        })["gs_token"].ToObject<string>();
+
         private JToken CallMethod(string methodName, IDictionary<string, string> parameters)
         {
             JToken result;

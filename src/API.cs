@@ -32,13 +32,19 @@ namespace Monopoly
             ["maxplayers"] = maxPlayers.ToString(),
             ["option_private"] = @private ? "1" : "0",
             ["option_autostart"] = autoStart ? "1" : "0",
-            ["is_tournament"] = "0",
-            ["access_token"] = _token
+            ["is_tournament"] = "0"
         })["room_id"].ToObject<ulong>();
+
+        public void DeleteRoom(ulong roomId) => CallMethod("rooms.delete", new Dictionary<string, string>
+        {
+            ["room_id"] = roomId.ToString()
+        });
 
         private JToken CallMethod(string methodName, IDictionary<string, string> parameters)
         {
             JToken result;
+
+            if (_token != null) parameters.Add("access_token", _token);
 
             using (var web = new WebClient())
             {

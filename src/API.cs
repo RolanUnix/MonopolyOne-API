@@ -40,6 +40,25 @@ namespace Monopoly
             ["room_id"] = roomId.ToString()
         });
 
+        public void InviteRoom(ulong userId, ulong roomId) => CallMethod("rooms.invite", new Dictionary<string, string>
+        {
+            ["user_id"] = userId.ToString(),
+            ["room_id"] = roomId.ToString()
+        });
+
+        public void JoinRoom(ulong roomId) => CallMethod("rooms.join", new Dictionary<string, string>
+        {
+            ["room_id"] = roomId.ToString()
+        });
+
+        public void KickRoom(ulong userId, ulong roomId) => CallMethod("rooms.kick", new Dictionary<string, string>
+        {
+            ["room_id"] = roomId.ToString(),
+            ["user_id"] = userId.ToString()
+        });
+
+        public void LeaveRoom() => CallMethod("rooms.leave", new Dictionary<string, string>());
+
         private JToken CallMethod(string methodName, IDictionary<string, string> parameters)
         {
             JToken result;

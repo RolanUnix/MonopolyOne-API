@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Text;
 using Monopoly.Enums;
@@ -59,6 +60,18 @@ namespace Monopoly
 
         public void LeaveRoom() => CallMethod("rooms.leave", new Dictionary<string, string>());
 
+        public void ChangeSettings(ChangeParameter parameter, int value, ulong roomId) => CallMethod("rooms.settingsChange", new Dictionary<string, string>
+        {
+            ["param"] = Extensions.GetEnumDescription(parameter),
+            ["value"] = value.ToString(),
+            ["room_id"] = roomId.ToString()
+        });
+
+        public void StartGame(ulong roomId) => CallMethod("rooms.startGame", new Dictionary<string, string>
+        {
+            ["room_id"] = roomId.ToString()
+        });
+
         private JToken CallMethod(string methodName, IDictionary<string, string> parameters)
         {
             JToken result;
@@ -71,6 +84,8 @@ namespace Monopoly
             }
 
             if (result["code"].ToObject<int>() != 0) throw new Exception(result["description"].ToObject<string>());
+
+            File.AppendAllText("log.txt", $"[{methodName}]: {result}\n\n");
 
             return result["data"];
         }

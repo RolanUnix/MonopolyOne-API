@@ -49,6 +49,9 @@
     <Compile Include="src\Enums\ChangeParameter.cs" />
     <Compile Include="src\Enums\GameMode.cs" />
     <Compile Include="src\Extensions.cs" />
+    <Compile Include="src\Views\Game.cs" />
+    <Compile Include="src\Views\Rank.cs" />
+    <Compile Include="src\Views\User.cs" />
     <Compile Include="tests\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

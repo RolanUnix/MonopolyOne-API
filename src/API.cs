@@ -4,6 +4,8 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Monopoly.Enums;
+using Monopoly.Views;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Monopoly
@@ -77,6 +79,12 @@ namespace Monopoly
             ["gs_id"] = id.ToString(),
             ["gs_game_id"] = gameId.ToString()
         })["gs_token"].ToObject<string>();
+
+        public User GetUser(ulong userId) => JsonConvert.DeserializeObject<User>(CallMethod("users.get", new Dictionary<string, string>
+        {
+            ["user_ids"] = userId.ToString(),
+            ["type"] = "short"
+        })[0].ToString());
 
         private JToken CallMethod(string methodName, IDictionary<string, string> parameters)
         {

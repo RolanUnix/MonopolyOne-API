@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using Monopoly.Enums;
 using Newtonsoft.Json.Linq;
 
 namespace Monopoly
@@ -23,6 +24,17 @@ namespace Monopoly
         {
             _token = token;
         }
+        
+        public ulong CreateRoom(GameMode mode, bool @private, bool autoStart, bool twoAgainstTwo, int maxPlayers) => CallMethod("rooms.create", new Dictionary<string, string>
+        {
+            ["game_submode"] = ((int)mode).ToString(),
+            ["game_2x2"] = twoAgainstTwo ? "1" : "0",
+            ["maxplayers"] = maxPlayers.ToString(),
+            ["option_private"] = @private ? "1" : "0",
+            ["option_autostart"] = autoStart ? "1" : "0",
+            ["is_tournament"] = "0",
+            ["access_token"] = _token
+        })["room_id"].ToObject<ulong>();
 
         private JToken CallMethod(string methodName, IDictionary<string, string> parameters)
         {

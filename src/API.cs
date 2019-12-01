@@ -69,6 +69,12 @@ namespace Monopoly
             ["room_id"] = roomId.ToString()
         });
 
+        public void ExecuteGameAction(GameAction action, string token) => CallMethod("game.action", new Dictionary<string, string>
+        {
+            ["action"] = Extensions.GetEnumDescription(action),
+            ["gs_token"] = token
+        });
+
         public void StartGame(ulong roomId) => CallMethod("rooms.startGame", new Dictionary<string, string>
         {
             ["room_id"] = roomId.ToString()

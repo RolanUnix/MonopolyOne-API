@@ -8,6 +8,45 @@ namespace Monopoly.Enums
         RollDices,
 
         [Description("leave")]
-        Leave
+        Leave,
+
+        [Description("buy")]
+        Buy,
+
+        [Description("toAuction")]
+        ToAuction,
+
+        [Description("auctionAccept")]
+        AuctionAccept,
+
+        [Description("auctionDecline")]
+        AuctionDecline,
+
+        [Description("payRent")]
+        PayRent,
+
+        [Description("payToBank")]
+        PayToBank,
+
+        [Description("payForUnjail")]
+        PayForUnJail,
+
+        [Description("wormholeUse")]
+        WormholeUse,
+
+        [Description("wormholeDecline")]
+        WormholeDecline,
+
+        [Description("contract")]
+        Contract,
+
+        [Description("contract_accept")]
+        ContractAccept,
+
+        [Description("contract_decline")]
+        ContractDecline,
+
+        [Description("levelUp")]
+        LevelUp,
     }
 }

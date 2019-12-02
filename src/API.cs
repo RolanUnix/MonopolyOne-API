@@ -69,11 +69,20 @@ namespace Monopoly
             ["room_id"] = roomId.ToString()
         });
 
-        public void ExecuteGameAction(GameAction action, string token) => CallMethod("game.action", new Dictionary<string, string>
+        public static void ExecuteGameAction(GameAction action, uint serverId, string token, Dictionary<string, string> parameters)
         {
-            ["action"] = Extensions.GetEnumDescription(action),
-            ["gs_token"] = token
-        });
+            parameters.Add("action", Extensions.GetEnumDescription(action));
+            parameters.Add("gs_token", token);
+
+            JToken result;
+
+            using (var web = new WebClient())
+            {
+                result = JToken.Parse(Encoding.UTF8.GetString(web.UploadValues($"https://gs{serverId}.monopoly-one.com/game.action", parameters.ToNameValueCollection())));
+            }
+
+            if (result["code"].ToObject<int>() != 0) throw new Exception(result["code"].ToObject<string>());
+        }
 
         public void StartGame(ulong roomId) => CallMethod("rooms.startGame", new Dictionary<string, string>
         {
@@ -104,8 +113,6 @@ namespace Monopoly
             }
 
             if (result["code"].ToObject<int>() != 0) throw new Exception(result["description"].ToObject<string>());
-
-            File.AppendAllText("log.txt", $"[{methodName}]: {result}\n\n");
 
             return result["data"];
         }
